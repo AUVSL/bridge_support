@@ -1,0 +1,34 @@
+# Lidar Driver:
+ros2 launch ouster_ros sensor.launch.xml sensor_hostname:=os-122318001257.local timestamp_mode:=TIME_FROM_ROS_TIME viz:=false
+
+# View Husky Model (optional):
+ros2 launch clearpath_viz view_model.launch.py setup_path:=/etc/clearpath
+
+# Transform Lidar Frame:
+ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 ouster_lidar_link os_sensor
+
+# Realsense Drivers:
+ros2 launch realsense2_camera rs_launch.py
+
+# Transform realsense frame:
+ros2 run tf2_ros static_transform_publisher 0 0 -0.1 0 0 0 ouster_lidar_link camera_link
+
+
+
+
+
+# Running ROS1-ROS2 Bridge:
+
+	## Source the correct files
+source /opt/ros/humble/setup.bash
+source ~/ros-humble-ros1-bridge/install/local_setup.bash
+
+	## Run the dynamic bridge
+ros2 run ros1_bridge parameter_bridge
+
+
+# TF2 to ROS1 TF Publisher:
+ros2 run support tf2_bridger
+
+# View frames  (optional):
+ros2 run tf2_tools view_frames --ros-args --remap /tf:=/test/tf --remap /tf_static:=/test/tf_static
