@@ -16,7 +16,7 @@ rosparam load /home/administrator/catkin_ws/bridge.yaml
 
 	## Launching the elevation mapping
 source /home/administrator/catkin_ws/devel/setup.bash
-roslaunch elevation_mapping_cupy husky_elevation_mapping_cupy.launch
+roslaunch elevation_mapping_cupy husky_elevation_mapping_cupy.launch /tf:=/test/tf
 
 
 # Static Transforms for camera and lidar
@@ -24,5 +24,5 @@ rosrun tf2_ros static_transform_publisher 0.113 0 0.714 -3.142 0 0 base_footprin
 rosrun tf2_ros static_transform_publisher 0.112 0.015 0.576 0.007 -0.001 0.005 base_footprint camera_color_frame
 rosrun tf2_ros static_transform_publisher 0 0 0 0 0 0 camera_color_frame camera_color_optical_frame
 
-# Viewing RQT tree
+# Viewing tf tree
 rosrun rqt_tf_tree rqt_tf_tree /tf:=/test/tf

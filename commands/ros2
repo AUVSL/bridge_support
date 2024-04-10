@@ -21,6 +21,7 @@ ros2 run tf2_ros static_transform_publisher 0 0 -0.1 0 0 0 ouster_lidar_link cam
 
 	## Source the correct files
 source /opt/ros/humble/setup.bash
+source ~/obstacle_det_ws/install/setup.bash
 source ~/ros-humble-ros1-bridge/install/local_setup.bash
 
 	## Run the dynamic bridge
@@ -28,6 +29,7 @@ ros2 run ros1_bridge parameter_bridge
 
 
 # TF2 to ROS1 TF Publisher:
+cd ~/obstacle_det_ws && source install/setup.bash
 ros2 run support tf2_bridger
 
 # View frames  (optional):
