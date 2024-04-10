@@ -37,3 +37,5 @@ ros2 run bridge_support elevation_map_modifier
 
 # View frames  (optional):
 ros2 run tf2_tools view_frames --ros-args --remap /tf:=/test/tf --remap /tf_static:=/test/tf_static
+
+ros2 run tf2_ros tf2_echo parent child
