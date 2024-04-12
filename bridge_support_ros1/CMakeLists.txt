@@ -9,11 +9,14 @@ project(bridge_support_ros1)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   custom_msgs_ros1
+  roslaunch
   geometry_msgs
   rospy
   std_msgs
   tf2_ros
 )
+
+roslaunch_add_file_check(launch)
 
 # catkin_python_setup()
 
@@ -25,4 +28,5 @@ catkin_install_python(PROGRAMS
 )
 
 install(DIRECTORY launch
+  launch/bringup_all.launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
