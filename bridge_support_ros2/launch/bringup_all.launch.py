@@ -14,20 +14,41 @@ def generate_launch_description():
     viz = LaunchConfiguration('viz', default='false')
 
     # Include the ouster_ros sensor launch file
-    # ouster_launch = IncludeLaunchDescription(
-    #         PythonLaunchDescriptionSource([
-    #             PathJoinSubstitution([
-    #                 FindPackageShare('launch_tutorial'),
-    #                 'launch',
-    #                 'example_substitutions.launch.py'
-    #             ])
-    #         ]),
-    #         launch_arguments={
-    #             'turtlesim_ns': 'turtlesim2',
-    #             'use_provided_red': 'True',
-    #             'new_background_r': TextSubstitution(text=str(colors['background_r']))
-    #         }.items()
-    #     )
+    ouster_launch = IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([
+                PathJoinSubstitution([
+                    FindPackageShare('ouster_ros'),
+                    'launch',
+                    'sensor.launch.xml'
+                ])
+            ]),
+            launch_arguments={
+                'sensor_hostname': sensor_hostname,
+                'timestamp_mode': timestamp_mode,
+                'viz': viz
+            }.items()
+        )
+
+    tf2_bridger = Node(
+        package='bridge_support',
+        namespace='',
+        executable='tf2_bridger',
+        name='tf2_bridger'
+    )
+
+    elevation_map_modifier = Node(
+        package='bridge_support',
+        namespace='',
+        executable='elevation_map_modifier',
+        name='elevation_map_modifier'
+    )
+
+    parameter_bridge = Node(
+        package='ros1_bridge',
+        namespace='',
+        executable='parameter_bridge',
+        name='parameter_bridge'
+    )
 
     # quat = tf_transformations.quaternion_from_euler(
     #             float(sys.argv[5]), float(sys.argv[6]), float(sys.argv[7]))
@@ -75,7 +96,9 @@ def generate_launch_description():
 
     return LaunchDescription([
         # Static TF Publishers
+        ouster_launch,
+        tf2_bridger,
+        elevation_map_modifier,
+        parameter_bridge,
         static_transforms
-        # staticTF_ouster_lidar_to_os_sensor,
-        # staticTF_ouster_lidar_to_camera    
   ])
