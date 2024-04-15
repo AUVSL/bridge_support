@@ -13,6 +13,7 @@ setup(
             ['resource/' + package_name]),
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name, ['param_bridge.sh']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

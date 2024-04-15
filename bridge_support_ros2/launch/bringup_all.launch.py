@@ -1,10 +1,11 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node, ComposableNodeContainer
 from launch_ros.substitutions import FindPackageShare
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, ExecuteProcess
 from launch.launch_description_sources import PythonLaunchDescriptionSource, FrontendLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution, TextSubstitution, LaunchConfiguration
 from launch_ros.descriptions import ComposableNode
+import os
 
 def generate_launch_description():
 
@@ -88,10 +89,19 @@ def generate_launch_description():
         output='screen'
     )
 
+    param_bridge = ExecuteProcess(cmd=[['bash ',
+        PathJoinSubstitution([
+                    FindPackageShare('bridge_support'),
+                    'param_bridge.sh'
+                ])
+            ]],
+        shell=True)
+
     return LaunchDescription([
         # Static TF Publishers
         # ouster_launch,
         tf2_bridger,
         elevation_map_modifier,
-        static_transforms
+        static_transforms,
+        param_bridge
   ])
