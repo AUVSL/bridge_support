@@ -17,7 +17,7 @@ class TF2ListenerNode(Node):
             return self.tf_buffer.lookup_transform(target_frame, source_frame, now)
             # self.get_logger().info(f'Transform: {transform}')
         except Exception as e:
-            self.get_logger().info(f'Could not transform {target_frame} to {source_frame}: {e}')
+            # self.get_logger().info(f'Could not transform {target_frame} to {source_frame}: {e}')
             return None
 
     def timer_callback(self):
@@ -31,7 +31,7 @@ class TF2ListenerNode(Node):
         if not any(transform is None for transform in transforms):
             tf_msg = TFMessage(transforms = transforms)
             # self.get_logger().info(f'Transforms Published: {transforms}')
-            self.get_logger().info("Publishing TF")
+            # self.get_logger().info("Publishing TF")
             self.pub.publish(tf_msg)
 
 def main(args=None):

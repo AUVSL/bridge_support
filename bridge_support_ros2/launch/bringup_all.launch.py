@@ -1,33 +1,34 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node, ComposableNodeContainer
 from launch_ros.substitutions import FindPackageShare
-from launch.actions import IncludeLaunchDescription
-from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.launch_description_sources import PythonLaunchDescriptionSource, FrontendLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution, TextSubstitution, LaunchConfiguration
 from launch_ros.descriptions import ComposableNode
 
 def generate_launch_description():
 
 
-    sensor_hostname = LaunchConfiguration('sensor_hostname', default='os-122318001257.local')
-    timestamp_mode = LaunchConfiguration('timestamp_mode', default='TIME_FROM_ROS_TIME')
-    viz = LaunchConfiguration('viz', default='false')
+    sensor_hostname = "os-122318001257.local"
+    timestamp_mode = "TIME_FROM_ROS_TIME"
+    viz = "false"
+
 
     # Include the ouster_ros sensor launch file
-    ouster_launch = IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([
-                PathJoinSubstitution([
-                    FindPackageShare('ouster_ros'),
-                    'launch',
-                    'sensor.launch.xml'
-                ])
-            ]),
-            launch_arguments={
-                'sensor_hostname': sensor_hostname,
-                'timestamp_mode': timestamp_mode,
-                'viz': viz
-            }.items()
-        )
+    # ouster_launch = IncludeLaunchDescription(
+    #         FrontendLaunchDescriptionSource([
+    #             PathJoinSubstitution([
+    #                 FindPackageShare('ouster_ros'),
+    #                 'launch',
+    #                 'sensor.launch.xml'
+    #             ])
+    #         ]),
+    #         launch_arguments={
+    #             'sensor_hostname': sensor_hostname,
+    #             'timestamp_mode': timestamp_mode,
+    #             'viz': viz
+    #         }.items()
+    #     )
 
     tf2_bridger = Node(
         package='bridge_support',
@@ -41,13 +42,6 @@ def generate_launch_description():
         namespace='',
         executable='elevation_map_modifier',
         name='elevation_map_modifier'
-    )
-
-    parameter_bridge = Node(
-        package='ros1_bridge',
-        namespace='',
-        executable='parameter_bridge',
-        name='parameter_bridge'
     )
 
     # quat = tf_transformations.quaternion_from_euler(
@@ -96,9 +90,8 @@ def generate_launch_description():
 
     return LaunchDescription([
         # Static TF Publishers
-        ouster_launch,
+        # ouster_launch,
         tf2_bridger,
         elevation_map_modifier,
-        parameter_bridge,
         static_transforms
   ])

@@ -12,7 +12,7 @@ roscore
 rviz /tf:=/test/tf
 
 	## Loading the bridge yaml file
-rosparam load /home/administrator/catkin_ws/bridge.yaml
+rosparam load /home/administrator/catkin_ws/src/bridge_support/bridge.yaml
 
 	## Launching the elevation mapping
 source /home/administrator/catkin_ws/devel/setup.bash
