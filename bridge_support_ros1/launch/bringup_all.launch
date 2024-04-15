@@ -1,0 +1,14 @@
+<launch>
+    <!-- Load parameters from a file -->
+    <rosparam file="/home/administrator/catkin_ws/bridge.yaml" command="load" />
+
+    <!-- Include the elevation mapping launch file -->
+    <include file="/home/administrator/catkin_ws/src/elevation_mapping_cupy/launch/husky_elevation_mapping_cupy.launch">
+        <remap from="/tf" to="/test/tf"/>
+    </include>
+
+    <!-- Static Transform Publishers -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="lidar_to_base" args="0.113 0 0.714 -3.142 0 0 base_footprint os_lidar" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="camera_to_base" args="0.112 0.015 0.576 0.007 -0.001 0.005 base_footprint camera_color_frame" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="camera_optical_frame" args="0 0 0 0 0 0 camera_color_frame camera_color_optical_frame" />
+</launch>
