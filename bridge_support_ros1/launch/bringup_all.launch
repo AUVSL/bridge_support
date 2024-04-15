@@ -1,11 +1,13 @@
 <launch>
     <!-- Load parameters from a file -->
-    <rosparam file="/home/administrator/catkin_ws/bridge.yaml" command="load" />
+    <rosparam file="/home/administrator/catkin_ws/src/bridge_support/bridge.yaml" command="load" />
 
-    <!-- Include the elevation mapping launch file -->
-    <include file="/home/administrator/catkin_ws/src/elevation_mapping_cupy/launch/husky_elevation_mapping_cupy.launch">
+    <!-- Launch Elevation Mapping Node -->
+    <node pkg="elevation_mapping_cupy" type="elevation_mapping_node" name="elevation_mapping" output="screen">
+        <rosparam command="load" file="$(find elevation_mapping_cupy)/config/core/core_param.yaml"/>
+        <rosparam command="load" file="$(find elevation_mapping_cupy)/config/core/example_setup.yaml"/>
         <remap from="/tf" to="/test/tf"/>
-    </include>
+    </node>
 
     <!-- Static Transform Publishers -->
     <node pkg="tf2_ros" type="static_transform_publisher" name="lidar_to_base" args="0.113 0 0.714 -3.142 0 0 base_footprint os_lidar" />

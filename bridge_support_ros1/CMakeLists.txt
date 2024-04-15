@@ -8,7 +8,7 @@ project(bridge_support_ros1)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  custom_msgs_ros1
+  custom_msgs
   roslaunch
   geometry_msgs
   rospy
@@ -28,5 +28,5 @@ catkin_install_python(PROGRAMS
 )
 
 install(DIRECTORY launch
-  launch/bringup_all.launch
+  /launch/bringup_all.launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
