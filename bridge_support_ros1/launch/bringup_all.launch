@@ -1,6 +1,6 @@
 <launch>
     <!-- Load parameters from a file -->
-    <rosparam file="/home/administrator/catkin_ws/src/bridge_support/bridge.yaml" command="load" />
+    <rosparam file="$(find bridge_support_ros1)/config/bridge.yaml" command="load" />
 
     <!-- Launch Elevation Mapping Node -->
     <node pkg="elevation_mapping_cupy" type="elevation_mapping_node" name="elevation_mapping" output="screen">

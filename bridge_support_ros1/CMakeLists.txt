@@ -30,3 +30,7 @@ catkin_install_python(PROGRAMS
 install(DIRECTORY launch
   /launch/bringup_all.launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+install(DIRECTORY config
+  /config/bridge.yaml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
